@@ -56,4 +56,4 @@ Designed in **Mobile First** with:
 
 ```bash
 [git clone https://github.com/syntax-squad/culturecoin.git
-cd culturecoin](https://Chandana_0205.github.io/Colossus2.0_SyntaxSquad/)
+cd culturecoin](https://Chandana-0205.github.io/Colossus2.0_SyntaxSquad/)
