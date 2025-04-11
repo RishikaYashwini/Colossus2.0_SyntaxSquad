@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CultureCoin Explorer Leaderboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #F9F6F1;
+            color: #1F1F1F;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #684CFF;
+            color: white;
+            padding: 1.5rem 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #FFD369;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #684CFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            color: #FFD369;
+            font-weight: 600;
+            background-color: rgba(255, 211, 105, 0.1);
+            position: relative;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background-color: #FFD369;
+            border-radius: 3px;
+        }
+
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        h1 {
+            margin-bottom: 2.5rem;
+            text-align: center;
+            color: #1F1F1F;
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: #684CFF;
+            border-radius: 2px;
+        }
+
+        .leaderboard {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .leaderboard-header {
+            display: grid;
+            grid-template-columns: 80px 1fr 1fr 120px;
+            background-color: #684CFF;
+            color: white;
+            padding: 1rem;
+            font-weight: bold;
+        }
+
+        .leaderboard-list {
+            list-style: none;
+        }
+
+        .leaderboard-item {
+            display: grid;
+            grid-template-columns: 80px 1fr 1fr 120px;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:last-child {
+            border-bottom: none;
+        }
+
+        .leaderboard-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .rank {
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rank-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .top-1 .rank-number {
+            background-color: gold;
+            color: #1F1F1F;
+        }
+
+        .top-2 .rank-number {
+            background-color: silver;
+            color: #1F1F1F;
+        }
+
+        .top-3 .rank-number {
+            background-color: #CD7F32; /* bronze */
+            color: white;
+        }
+
+        .top-1, .top-2, .top-3 {
+            background-color: rgba(255, 211, 105, 0.15);
+            font-weight: 500;
+        }
+
+        .username {
+            font-weight: 500;
+        }
+
+        .points {
+            font-weight: bold;
+            color: #684CFF;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #684CFF;
+            color: white;
+            font-weight: bold;
+        }
+
+        .explorer-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .badge {
+            margin-left: 10px;
+            color: #684CFF;
+        }
+
+        footer {
+            background-color: #684CFF;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .achievement {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .achievement i {
+            color: #FFD369;
+        }
+
+        @media (max-width: 768px) {
+            .leaderboard-header, .leaderboard-item {
+                grid-template-columns: 50px 2fr 1fr;
+            }
+            
+            .achievement {
+                display: none;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: space-around;
+                gap: 0.5rem;
+            }
+            
+            .nav-links a {
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">C</div>
+                <span>CultureCoin</span>
+            </div>
+            <div class="nav-links">
+                <a href="explorer-dashboard.html">Dashboard</a>
+                <a href="#" class="active">Leaderboard</a>
+                <a href="explorer-rewards.html">Rewards</a>
+                <a href="../index.html">Logout</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Explorer Leaderboard</h1>
+        
+        <div class="leaderboard">
+            <div class="leaderboard-header">
+                <div>Rank</div>
+                <div>Explorer</div>
+                <div>Achievement</div>
+                <div>Points</div>
+            </div>
+            <ul class="leaderboard-list" id="leaderboard-list">
+                <!-- Leaderboard items will be inserted here by JavaScript -->
+            </ul>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CultureCoin - Connecting Communities Through Culture</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample explorer data for the leaderboard
+        const explorers = [
+            {
+                rank: 1,
+                username: "SakuraHanami",
+                points: 15750,
+                achievement: "Cultural Maestro",
+                badge: "fa-crown"
+            },
+            {
+                rank: 2,
+                username: "RajaHeritage",
+                points: 14280,
+                achievement: "Heritage Guardian",
+                badge: "fa-shield-alt"
+            },
+            {
+                rank: 3,
+                username: "ZahraNomad",
+                points: 13620,
+                achievement: "World Explorer",
+                badge: "fa-globe-americas"
+            },
+            {
+                rank: 4,
+                username: "LingXiaojie",
+                points: 10140,
+                achievement: "City Specialist",
+                badge: "fa-building"
+            },
+            {
+                rank: 5,
+                username: "AlessandroStoria",
+                points: 9875,
+                achievement: "Time Traveler",
+                badge: "fa-hourglass-half"
+            },
+            {
+                rank: 6,
+                username: "FatimaDelights",
+                points: 8750,
+                achievement: "Culinary Expert",
+                badge: "fa-utensils"
+            },
+            {
+                rank: 7,
+                username: "KwameRhythms",
+                points: 7840,
+                achievement: "Sound Seeker",
+                badge: "fa-music"
+            },
+            {
+                rank: 8,
+                username: "MehmetUsta",
+                points: 7230,
+                achievement: "Craft Collector",
+                badge: "fa-paint-brush"
+            },
+            {
+                rank: 9,
+                username: "AnanyaVed",
+                points: 6850,
+                achievement: "Street Smart",
+                badge: "fa-map-marked-alt"
+            },
+            {
+                rank: 10,
+                username: "CarlosTradición",
+                points: 6120,
+                achievement: "Culture Preserver",
+                badge: "fa-landmark"
+            },
+            {
+                rank: 11,
+                username: "YukiMatsuri",
+                points: 5980,
+                achievement: "Festival Expert",
+                badge: "fa-mask"
+            },
+            {
+                rank: 12,
+                username: "MohammadAdab",
+                points: 5870,
+                achievement: "Literary Scholar",
+                badge: "fa-book-open"
+            },
+            {
+                rank: 13,
+                username: "PriyaRangoli",
+                points: 5430,
+                achievement: "Art Patron",
+                badge: "fa-palette"
+            },
+            {
+                rank: 14,
+                username: "GiovanniArte",
+                points: 5210,
+                achievement: "Renaissance Explorer",
+                badge: "fa-archway"
+            },
+            {
+                rank: 15,
+                username: "AminaHikma",
+                points: 4980,
+                achievement: "Wisdom Keeper",
+                badge: "fa-lightbulb"
+            },
+            {
+                rank: 16,
+                username: "JavierFiesta",
+                points: 4760,
+                achievement: "Celebration Expert",
+                badge: "fa-glass-cheers"
+            },
+            {
+                rank: 17,
+                username: "NiaUbuntu",
+                points: 4520,
+                achievement: "Community Builder",
+                badge: "fa-hands-helping"
+            },
+            {
+                rank: 18,
+                username: "RajivVedanta",
+                points: 4310,
+                achievement: "Philosophy Guide",
+                badge: "fa-yin-yang"
+            },
+            {
+                rank: 19,
+                username: "LeilaZafaf",
+                points: 4120,
+                achievement: "Tradition Keeper",
+                badge: "fa-ankh"
+            },
+            {
+                rank: 20,
+                username: "HiroshiWabi",
+                points: 3980,
+                achievement: "Aesthetic Explorer",
+                badge: "fa-leaf"
+            }
+        ];
+
+        // Function to create avatar from initials
+        function createAvatar(username) {
+            const initials = username.split(' ').map(name => name[0]).join('').substring(0, 2);
+            return `<div class="avatar">${initials}</div>`;
+        }
+
+        // Function to populate the leaderboard
+        function populateLeaderboard() {
+            const leaderboardList = document.getElementById('leaderboard-list');
+            
+            explorers.forEach(explorer => {
+                const listItem = document.createElement('li');
+                listItem.className = `leaderboard-item ${explorer.rank <= 3 ? 'top-' + explorer.rank : ''}`;
+                
+                listItem.innerHTML = `
+                    <div class="rank">
+                        <div class="rank-number">${explorer.rank}</div>
+                    </div>
+                    <div class="explorer-info">
+                        ${createAvatar(explorer.username)}
+                        <span class="username">${explorer.username}</span>
+                        ${explorer.rank <= 3 ? `<i class="fas ${explorer.badge} badge"></i>` : ''}
+                    </div>
+                    <div class="achievement">
+                        <i class="fas ${explorer.badge}"></i>
+                        ${explorer.achievement}
+                    </div>
+                    <div class="points">${explorer.points.toLocaleString()} pts</div>
+                `;
+                
+                leaderboardList.appendChild(listItem);
+            });
+        }
+
+        // Call the function to populate the leaderboard when the page loads
+        window.addEventListener('DOMContentLoaded', populateLeaderboard);
+    </script>
+</body>
+</html>
