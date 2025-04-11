@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Listings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --background: #F9F6F1;
+            --primary: #684CFF;
+            --accent: #FFD369;
+            --text: #1F1F1F;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a.active {
+            color: var(--accent);
+            font-weight: 600;
+            background-color: rgba(255, 211, 105, 0.1);
+            position: relative;
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 3px;
+        }
+        
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+            width: 100%;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: var(--text);
+            position: relative;
+            display: inline-block;
+            margin: 0 auto;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #5a3ee0;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(104, 76, 255, 0.3);
+        }
+        
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .reward-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .reward-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(104, 76, 255, 0.2);
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 1rem;
+            position: relative;
+        }
+        
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        
+        .points-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--accent);
+            color: var(--text);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+        
+        .btn-edit {
+            background-color: var(--accent);
+            color: var(--text);
+        }
+        
+        .btn-edit:hover {
+            background-color: #ffc740;
+        }
+        
+        .btn-delete {
+            background-color: #ff6b6b;
+        }
+        
+        .btn-delete:hover {
+            background-color: #ff5252;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+        
+        .empty-state h2 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        .empty-state p {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 1rem;
+        }
+        
+        .modal-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        .close-btn {
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #666;
+            transition: color 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(104, 76, 255, 0.2);
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn-cancel {
+            background-color: #ddd;
+            color: var(--text);
+        }
+        
+        .btn-cancel:hover {
+            background-color: #ccc;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: space-around;
+                gap: 0.5rem;
+            }
+
+            .nav-links a {
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .rewards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">C</div>
+                <span>CultureCoin</span>
+            </div>
+            <div class="nav-links">
+                <a href="merchant-dashboard.html">Dashboard</a>
+                <a href="#" class="active">Listings</a>
+                <a href="merchant-insights.html">Insights</a>
+                <a href="../index3.html">Logout</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="page-header">
+            <h1>Your Reward Listings</h1>
+        </div>
+        
+        <div style="text-align: right; margin-bottom: 2rem;">
+            <button class="btn" id="add-reward-btn"><i class="fas fa-plus"></i> Add New Reward</button>
+        </div>
+        
+        <div class="rewards-grid">
+            <!-- Reward Card 1 -->
+            <div class="reward-card">
+                <div class="card-header">
+                    <h3>Premium Coffee</h3>
+                    <span class="points-badge">250 points</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Redeem for a free specialty coffee of your choice.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reward Card 2 -->
+            <div class="reward-card">
+                <div class="card-header">
+                    <h3>Free Pastry</h3>
+                    <span class="points-badge">150 points</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Choose any pastry from our selection for free.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reward Card 3 -->
+            <div class="reward-card">
+                <div class="card-header">
+                    <h3>Lunch Special</h3>
+                    <span class="points-badge">500 points</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Get a sandwich, drink, and chips combo on us.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reward Card 4 -->
+            <div class="reward-card">
+                <div class="card-header">
+                    <h3>10% Discount</h3>
+                    <span class="points-badge">100 points</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">10% off your next purchase. Valid for 30 days.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reward Card 5 -->
+            <div class="reward-card">
+                <div class="card-header">
+                    <h3>VIP Experience</h3>
+                    <span class="points-badge">1000 points</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Private tasting session with our head chef.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Reward Card 6 -->
+            <div class="reward-card">
+                <div class="card-header">
+                    <h3>Free Delivery</h3>
+                    <span class="points-badge">75 points</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Free delivery on your next online order.</p>
+                    <div class="card-actions">
+                        <button class="btn btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                        <button class="btn btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Empty state (hidden by default) -->
+        <div class="empty-state" style="display: none;">
+            <h2>No Rewards Yet</h2>
+            <p>You haven't created any reward listings. Get started by adding your first reward!</p>
+            <button class="btn" id="empty-add-btn"><i class="fas fa-plus"></i> Create Your First Reward</button>
+        </div>
+        
+        <!-- Add/Edit Reward Modal -->
+        <div class="modal" id="reward-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title">Add New Reward</h2>
+                    <button class="close-btn">&times;</button>
+                </div>
+                <form id="reward-form">
+                    <div class="form-group">
+                        <label for="reward-name">Reward Name</label>
+                        <input type="text" id="reward-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reward-points">Points Required</label>
+                        <input type="number" id="reward-points" class="form-control" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reward-description">Description</label>
+                        <textarea id="reward-description" class="form-control" required></textarea>
+                    </div>
+                    <input type="hidden" id="reward-id">
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-cancel" id="cancel-btn">Cancel</button>
+                        <button type="submit" class="btn">Save Reward</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Loyalty Rewards - Connecting Merchants With Customers</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rewardsGrid = document.querySelector('.rewards-grid');
+            const emptyState = document.querySelector('.empty-state');
+            const addRewardBtn = document.getElementById('add-reward-btn');
+            const emptyAddBtn = document.getElementById('empty-add-btn');
+            const modal = document.getElementById('reward-modal');
+            const closeBtn = document.querySelector('.close-btn');
+            const cancelBtn = document.getElementById('cancel-btn');
+            const rewardForm = document.getElementById('reward-form');
+            const modalTitle = document.getElementById('modal-title');
+            
+            // Check URL params to see if we should open the add modal automatically
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('action') === 'add') {
+                openAddModal();
+            }
+            
+            // Function to open modal in add mode
+            function openAddModal() {
+                modalTitle.textContent = 'Add New Reward';
+                rewardForm.reset();
+                document.getElementById('reward-id').value = '';
+                modal.style.display = 'flex';
+            }
+            
+            // Function to open modal in edit mode
+            function openEditModal(card) {
+                modalTitle.textContent = 'Edit Reward';
+                const title = card.querySelector('h3').textContent;
+                const points = card.querySelector('.points-badge').textContent.split(' ')[0];
+                const description = card.querySelector('.card-description').textContent;
+                
+                document.getElementById('reward-name').value = title;
+                document.getElementById('reward-points').value = points;
+                document.getElementById('reward-description').value = description;
+                document.getElementById('reward-id').value = card.dataset.id || Date.now().toString();
+                
+                modal.style.display = 'flex';
+            }
+            
+            // Close modal function
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+            
+            // Check if rewards exist and show empty state if not
+            function checkRewards() {
+                if (rewardsGrid.children.length === 0) {
+                    emptyState.style.display = 'block';
+                } else {
+                    emptyState.style.display = 'none';
+                }
+            }
+            
+            // Create new reward card
+            function createRewardCard(data) {
+                const card = document.createElement('div');
+                card.className = 'reward-card';
+                card.dataset.id = data.id;
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3>${data.name}</h3>
+                        <span class="points-badge">${data.points} points</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-description">${data.description}</p>
+                        <div class="card-actions">
+                            <button class="btn btn-edit"><i class="fas fa-edit"></i> Edit</button>
+                            <button class="btn btn-delete"><i class="fas fa-trash"></i> Delete</button>
+                        </div>
+                    </div>
+                `;
+                
+                // Add event listeners for the new card
+                card.querySelector('.btn-edit').addEventListener('click', function() {
+                    openEditModal(card);
+                });
+                
+                card.querySelector('.btn-delete').addEventListener('click', function() {
+                    deleteReward(card);
+                });
+                
+                return card;
+            }
+            
+            // Delete reward function
+            function deleteReward(card) {
+                card.style.opacity = '0';
+                setTimeout(() => {
+                    card.remove();
+                    checkRewards();
+                }, 300);
+            }
+            
+            // Event listeners
+            addRewardBtn.addEventListener('click', openAddModal);
+            emptyAddBtn.addEventListener('click', openAddModal);
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Form submission
+            rewardForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const rewardId = document.getElementById('reward-id').value || Date.now().toString();
+                const rewardData = {
+                    id: rewardId,
+                    name: document.getElementById('reward-name').value,
+                    points: document.getElementById('reward-points').value,
+                    description: document.getElementById('reward-description').value
+                };
+                
+                // Check if we're editing or adding
+                const existingCard = document.querySelector(`.reward-card[data-id="${rewardId}"]`);
+                
+                if (existingCard) {
+                    // Update existing card
+                    existingCard.querySelector('h3').textContent = rewardData.name;
+                    existingCard.querySelector('.points-badge').textContent = `${rewardData.points} points`;
+                    existingCard.querySelector('.card-description').textContent = rewardData.description;
+                } else {
+                    // Add new card
+                    const newCard = createRewardCard(rewardData);
+                    rewardsGrid.prepend(newCard);
+                    checkRewards();
+                }
+                
+                closeModal();
+            });
+            
+            // Set up existing delete buttons
+            const deleteButtons = document.querySelectorAll('.btn-delete');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const card = this.closest('.reward-card');
+                    deleteReward(card);
+                });
+            });
+            
+            // Set up existing edit buttons
+            const editButtons = document.querySelectorAll('.btn-edit');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const card = this.closest('.reward-card');
+                    openEditModal(card);
+                });
+            });
+            
+            // Add unique IDs to existing cards for tracking
+            document.querySelectorAll('.reward-card').forEach((card, index) => {
+                card.dataset.id = `existing-${index}`;
+            });
+            
+            // Initial check for empty state
+            checkRewards();
+        });
+    </script>
+</body>
+</html>

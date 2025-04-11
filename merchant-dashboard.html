@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --background: #F9F6F1;
+            --primary: #684CFF;
+            --accent: #FFD369;
+            --text: #1F1F1F;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .nav-links a.active {
+            color: var(--accent);
+            font-weight: 600;
+            background-color: rgba(255, 211, 105, 0.1);
+            position: relative;
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 3px;
+        }
+        
+        main {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+            width: 100%;
+        }
+        
+        .welcome-section {
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(104, 76, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .avatar:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+        
+        h1 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+        
+        .dashboard-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(104, 76, 255, 0.2);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--primary);
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            background-color: rgba(104, 76, 255, 0.1);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .card h2 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .card p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .card-stats {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem;
+            background-color: rgba(104, 76, 255, 0.05);
+            border-radius: 8px;
+        }
+        
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: auto;
+        }
+        
+        .btn:hover {
+            background-color: #5a3ee0;
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(104, 76, 255, 0.3);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--text);
+        }
+        
+        .btn-accent:hover {
+            background-color: #ffc740;
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .nav-links {
+                width: 100%;
+                justify-content: space-around;
+                gap: 0.5rem;
+            }
+
+            .nav-links a {
+                padding: 0.5rem;
+                font-size: 1rem;
+            }
+            
+            .dashboard-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.75rem;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">C</div>
+                <span>CultureCoin</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active">Dashboard</a>
+                <a href="merchant-listings.html">Listings</a>
+                <a href="merchant-insights.html">Insights</a>
+                <a href="../index3.html">Logout</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="welcome-section">
+            <div class="avatar">M</div>
+            <h1>Welcome to your Merchant Dashboard</h1>
+            <p>Manage your rewards and track customer engagement from this central hub.</p>
+        </section>
+        
+        <div class="dashboard-actions">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <h2>Create Rewards</h2>
+                <p>Add new rewards for your customers and set redemption criteria.</p>
+                <div class="card-stats">
+                    <div class="stat">
+                        <span class="stat-value">12</span>
+                        <span class="stat-label">Active</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">3</span>
+                        <span class="stat-label">Draft</span>
+                    </div>
+                </div>
+                <a href="#" id="add-reward-btn" class="btn">Add Reward</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-list-alt"></i>
+                </div>
+                <h2>Manage Listings</h2>
+                <p>View and edit your current reward listings and track redemptions.</p>
+                <div class="card-stats">
+                    <div class="stat">
+                        <span class="stat-value">45</span>
+                        <span class="stat-label">Claimed</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">120</span>
+                        <span class="stat-label">Available</span>
+                    </div>
+                </div>
+                <a href="merchant-listings.html" class="btn btn-accent">View Listings</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h2>Business Insights</h2>
+                <p>Analyze customer engagement and reward performance metrics.</p>
+                <div class="card-stats">
+                    <div class="stat">
+                        <span class="stat-value">32%</span>
+                        <span class="stat-label">Growth</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">86</span>
+                        <span class="stat-label">New Users</span>
+                    </div>
+                </div>
+                <a href="merchant-insights.html" class="btn">View Insights</a>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Loyalty Rewards - Connecting Merchants With Customers</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addRewardBtn = document.getElementById('add-reward-btn');
+            
+            addRewardBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'merchant-listings.html?action=add';
+            });
+        });
+    </script>
+</body>
+</html>
