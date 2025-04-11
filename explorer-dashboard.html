@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorer Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F9F6F1;
+            color: #1F1F1F;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #684CFF;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #684CFF;
+            border-radius: 3px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #684CFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1rem;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(104, 76, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        .points-display {
+            background-color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            border: 2px solid #FFD369;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .points-display::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,211,105,0.1) 0%, rgba(255,211,105,0) 70%);
+            z-index: 0;
+        }
+
+        .points-value {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #684CFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .coin-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #FFD369;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: #1F1F1F;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .buttons-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .main-button {
+            background-color: #684CFF;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 2rem 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(104, 76, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+        }
+
+        .main-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(104, 76, 255, 0.4);
+        }
+
+        .main-button:hover::after {
+            animation: shine 1.5s infinite;
+        }
+
+        @keyframes shine {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .button-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .main-button:hover .button-icon {
+            transform: scale(1.1);
+        }
+
+        .logout-container {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(31, 31, 31, 0.1);
+        }
+
+        .logout-button {
+            background-color: transparent;
+            color: #1F1F1F;
+            border: 2px solid #1F1F1F;
+            border-radius: 8px;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logout-button:hover {
+            background-color: rgba(31, 31, 31, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .notification {
+            background-color: #FFD369;
+            color: #1F1F1F;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 3px 8px rgba(255, 211, 105, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .buttons-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .points-value {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="avatar">E</div>
+            <h1>Welcome, Explorer!</h1>
+        </div>
+
+        <div class="notification">
+            <div class="notification-icon">🎉</div>
+            <div>Your last expedition earned you 50 points! Keep exploring!</div>
+        </div>
+
+        <div class="points-display">
+            <p>Your Explorer Points</p>
+            <div class="points-value">
+                <div class="coin-icon">$</div>
+                <span>750</span>
+            </div>
+        </div>
+
+        <div class="buttons-container">
+            <a href="explorer-rewards.html" class="main-button">
+                <div class="button-icon">🎁</div>
+                <span>View Rewards</span>
+            </a>
+            <a href="explorer-leaderboard.html" class="main-button">
+                <div class="button-icon">🏆</div>
+                <span>Leaderboard</span>
+            </a>
+        </div>
+
+        <div class="logout-container">
+            <a href="../index.html" class="logout-button">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
