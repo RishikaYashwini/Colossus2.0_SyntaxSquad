@@ -55,5 +55,5 @@ Designed in **Mobile First** with:
 ## 📦 Installation
 
 ```bash
-git clone https://github.com/syntax-squad/culturecoin.git
-cd culturecoin
+[git clone https://github.com/syntax-squad/culturecoin.git
+cd culturecoin](https://Chandana_0205.github.io/Colossus2.0_SyntaxSquad/)
