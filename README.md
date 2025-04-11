@@ -11,7 +11,7 @@ CultureCoin is a tech-driven platform that incentivizes people to explore and su
 - 🎒 Earn CultureCoins (CC) for every cultural activity.
 - 🎁 Redeem CCs for small perks, rewards, or recognition.
 - 🧾 View CC wallet, activity history, and badges.
-- 🌒 Dark and Light Mode UI with theme memory.
+
 
 ### For Merchants (Local Businesses):
 - 📊 Track customer engagement and leaderboard.
@@ -25,7 +25,7 @@ CultureCoin is a tech-driven platform that incentivizes people to explore and su
 
 | Component       | Tech Used                          |
 |-----------------|------------------------------------|
-| Frontend        | Figma UI → ReactJS / HTML5 (TBD)   |
+| Frontend        | Mobile first UI/UX   |
 | Backend         | Python (Flask/FastAPI)             |
 | ML Integration  | Scikit-learn, Pandas, NumPy        |
 | Data Layer      | Firebase + PostgreSQL              |
@@ -45,7 +45,7 @@ CultureCoin is a tech-driven platform that incentivizes people to explore and su
 
 ## 📷 UI/UX Design
 
-Designed in **Figma** with:
+Designed in **Mobile First** with:
 - Warm, earthy tones to evoke cultural comfort.
 - Seamless toggling between Light and Dark Mode.
 - Intuitive dashboard flow for both user roles.
