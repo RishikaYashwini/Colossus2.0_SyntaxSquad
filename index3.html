@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CultureCoin - Gamify Culture. Earn Rewards.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #F9F6F1;
+            color: #1F1F1F;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 20px 0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 24px;
+            color: #684CFF;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #684CFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: #1F1F1F;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #684CFF;
+        }
+        
+        .lang-select {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .lang-btn {
+            background-color: #684CFF;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .lang-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 150px;
+            display: none;
+            z-index: 100;
+        }
+        
+        .lang-options.show {
+            display: block;
+        }
+        
+        .lang-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .lang-option:hover {
+            background-color: #F9F6F1;
+            color: #684CFF;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #1F1F1F;
+        }
+        
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #684CFF;
+            font-weight: 500;
+        }
+        
+        .currency-graphic {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(104, 76, 255, 0.1);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(104, 76, 255, 0.2);
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #F9F6F1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .card-icon svg {
+            width: 30px;
+            height: 30px;
+            color: #684CFF;
+        }
+        
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #1F1F1F;
+        }
+        
+        .card p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #684CFF;
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(104, 76, 255, 0.3);
+        }
+        
+        .btn:hover {
+            background-color: #5B3FE6;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(104, 76, 255, 0.4);
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        footer {
+            background-color: #1F1F1F;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        footer p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* Menu toggle button styles */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+        
+        .menu-toggle svg {
+            width: 24px;
+            height: 24px;
+            color: #684CFF;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 20px;
+            }
+            
+            .currency-graphic {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .cards-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                right: 20px;
+                background-color: white;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                z-index: 100;
+                display: none;
+            }
+            
+            .nav-links.show {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .currency-graphic {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .btn {
+                padding: 14px 28px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <div class="logo-icon">C</div>
+                    <span data-translate="logo">CultureCoin</span>
+                </div>
+                <button class="menu-toggle" id="menuToggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <div class="nav-links" id="navLinks">
+                    <a href="#" data-translate="about">About</a>
+                    <a href="#" data-translate="features">Features</a>
+                    <a href="#" data-translate="contact">Contact</a>
+                    <div class="lang-select">
+                        <button id="langButton" class="lang-btn">
+                            <span id="currentLanguage">English</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div id="langOptions" class="lang-options">
+                            <div class="lang-option" onclick="setLanguage('en')">English</div>
+                            <div class="lang-option" onclick="setLanguage('hi')">हिंदी</div>
+                            <div class="lang-option" onclick="setLanguage('kn')">ಕನ್ನಡ</div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1 data-translate="welcome">Welcome to CultureCoin</h1>
+            <p data-translate="tagline">Gamify Culture. Earn Rewards.</p>
+            <div class="currency-graphic">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="80" fill="#684CFF" opacity="0.1"/>
+                    <circle cx="100" cy="100" r="60" fill="#684CFF" opacity="0.2"/>
+                    <circle cx="100" cy="100" r="40" fill="#684CFF" opacity="0.3"/>
+                    <text x="100" y="110" font-family="Arial" font-size="40" font-weight="bold" fill="#684CFF" text-anchor="middle">CC</text>
+                    <circle cx="70" cy="70" r="15" fill="#FFD700" stroke="#D4AF37" stroke-width="2">
+                        <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="10s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="130" cy="130" r="12" fill="#C0C0C0" stroke="#A8A8A8" stroke-width="2">
+                        <animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="8s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="130" cy="70" r="10" fill="#CD7F32" stroke="#804A00" stroke-width="2">
+                        <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="12s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 data-translate="explore-title">Explore Local Culture</h3>
+                    <p data-translate="explore-desc">Discover hidden gems in your city and earn coins for every new experience you unlock.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 data-translate="redeem-title">Redeem Real Rewards</h3>
+                    <p data-translate="redeem-desc">Turn your digital coins into real-life rewards at local businesses and cultural venues.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <h3 data-translate="merchant-title">Free for Merchants</h3>
+                    <p data-translate="merchant-desc">Local businesses can list offers for free and attract culture-hungry customers.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <h3 data-translate="leaderboard-title">Climb the Leaderboard</h3>
+                    <p data-translate="leaderboard-desc">Compete with friends and earn achievements as you become a cultural connoisseur.</p>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <a href="pages/login.html" class="btn" data-translate="login-btn">Login to Start</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p data-translate="copyright">&copy; 2025 CultureCoin. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language translations
+        const translations = {
+            en: {
+                "logo": "CultureCoin",
+                "about": "About",
+                "features": "Features",
+                "contact": "Contact",
+                "language": "English",
+                "welcome": "Welcome to CultureCoin",
+                "tagline": "Gamify Culture. Earn Rewards.",
+                "explore-title": "Explore Local Culture",
+                "explore-desc": "Discover hidden gems in your city and earn coins for every new experience you unlock.",
+                "redeem-title": "Redeem Real Rewards",
+                "redeem-desc": "Turn your digital coins into real-life rewards at local businesses and cultural venues.",
+                "merchant-title": "Free for Merchants",
+                "merchant-desc": "Local businesses can list offers for free and attract culture-hungry customers.",
+                "leaderboard-title": "Climb the Leaderboard",
+                "leaderboard-desc": "Compete with friends and earn achievements as you become a cultural connoisseur.",
+                "login-btn": "Login to Start",
+                "copyright": "&copy; 2025 CultureCoin. All rights reserved."
+            },
+            hi: {
+                "logo": "कल्चरकॉइन",
+                "about": "परिचय",
+                "features": "विशेषताएँ",
+                "contact": "संपर्क",
+                "language": "हिंदी",
+                "welcome": "कल्चरकॉइन में आपका स्वागत है",
+                "tagline": "संस्कृति को गेमिफाई करें। पुरस्कार कमाएं।",
+                "explore-title": "स्थानीय संस्कृति का पता लगाएं",
+                "explore-desc": "अपने शहर में छिपे रत्नों की खोज करें और हर नए अनुभव के लिए सिक्के कमाएं।",
+                "redeem-title": "वास्तविक पुरस्कार प्राप्त करें",
+                "redeem-desc": "अपने डिजिटल सिक्कों को स्थानीय व्यवसायों और सांस्कृतिक स्थानों पर वास्तविक पुरस्कारों में बदलें।",
+                "merchant-title": "व्यापारियों के लिए मुफ्त",
+                "merchant-desc": "स्थानीय व्यवसाय मुफ्त में ऑफर सूचीबद्ध कर सकते हैं और संस्कृति-भूखे ग्राहकों को आकर्षित कर सकते हैं।",
+                "leaderboard-title": "लीडरबोर्ड पर चढ़ें",
+                "leaderboard-desc": "दोस्तों के साथ प्रतिस्पर्धा करें और सांस्कृतिक पारखी बनने पर उपलब्धियां हासिल करें।",
+                "login-btn": "शुरू करने के लिए लॉगिन करें",
+                "copyright": "&copy; 2025 कल्चरकॉइन। सर्वाधिकार सुरक्षित।"
+            },
+            kn: {
+                "logo": "ಕಲ್ಚರ್‌ಕಾಯಿನ್",
+                "about": "ನಮ್ಮ ಬಗ್ಗೆ",
+                "features": "ವೈಶಿಷ್ಟ್ಯಗಳು",
+                "contact": "ಸಂಪರ್ಕಿಸಿ",
+                "language": "ಕನ್ನಡ",
+                "welcome": "ಕಲ್ಚರ್‌ಕಾಯಿನ್‌ಗೆ ಸುಸ್ವಾಗತ",
+                "tagline": "ಸಂಸ್ಕೃತಿಯನ್ನು ಆಟವಾಗಿಸಿ. ಬಹುಮಾನಗಳನ್ನು ಗಳಿಸಿ.",
+                "explore-title": "ಸ್ಥಳೀಯ ಸಂಸ್ಕೃತಿಯನ್ನು ಅನ್ವೇಷಿಸಿ",
+                "explore-desc": "ನಿಮ್ಮ ನಗರದಲ್ಲಿ ಅಡಗಿರುವ ರತ್ನಗಳನ್ನು ಕಂಡುಹಿಡಿಯಿರಿ ಮತ್ತು ಪ್ರತಿ ಹೊಸ ಅನುಭವಕ್ಕೆ ನಾಣ್ಯಗಳನ್ನು ಗಳಿಸಿ.",
+                "redeem-title": "ನೈಜ ಬಹುಮಾನಗಳನ್ನು ರಿಡೀಮ್ ಮಾಡಿ",
+                "redeem-desc": "ನಿಮ್ಮ ಡಿಜಿಟಲ್ ನಾಣ್ಯಗಳನ್ನು ಸ್ಥಳೀಯ ವ್ಯಾಪಾರಗಳು ಮತ್ತು ಸಾಂಸ್ಕೃತಿಕ ಸ್ಥಳಗಳಲ್ಲಿ ನೈಜ ಬಹುಮಾನಗಳಾಗಿ ಪರಿವರ್ತಿಸಿ.",
+                "merchant-title": "ವ್ಯಾಪಾರಿಗಳಿಗೆ ಉಚಿತ",
+                "merchant-desc": "ಸ್ಥಳೀಯ ವ್ಯಾಪಾರಗಳು ಉಚಿತವಾಗಿ ಕೊಡುಗೆಗಳನ್ನು ಪಟ್ಟಿ ಮಾಡಬಹುದು ಮತ್ತು ಸಂಸ್ಕೃತಿ-ಹಸಿವಿನ ಗ್ರಾಹಕರನ್ನು ಆಕರ್ಷಿಸಬಹುದು.",
+                "leaderboard-title": "ಲೀಡರ್‌ಬೋರ್ಡ್ ಏರಿ",
+                "leaderboard-desc": "ಸ್ನೇಹಿತರೊಂದಿಗೆ ಸ್ಪರ್ಧಿಸಿ ಮತ್ತು ನೀವು ಸಾಂಸ್ಕೃತಿಕ ವಿದಗ್ಧರಾಗುತ್ತಿದ್ದಂತೆ ಸಾಧನೆಗಳನ್ನು ಗಳಿಸಿ.",
+                "login-btn": "ಪ್ರಾರಂಭಿಸಲು ಲಾಗಿನ್ ಮಾಡಿ",
+                "copyright": "&copy; 2025 ಕಲ್ಚರ್‌ಕಾಯಿನ್. ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ."
+            }
+        };
+
+        // Current language
+        let currentLang = 'en';
+
+        // Menu toggle event
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('show');
+        });
+
+        // Language button click event
+        document.getElementById('langButton').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('langOptions').classList.toggle('show');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.lang-select')) {
+                document.getElementById('langOptions').classList.remove('show');
+            }
+            if (!e.target.closest('#menuToggle') && !e.target.closest('.nav-links') && window.innerWidth <= 480) {
+                document.getElementById('navLinks').classList.remove('show');
+            }
+        });
+
+        // Function to set language
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('currentLanguage').textContent = translations[lang]['language'];
+            document.documentElement.setAttribute('lang', lang);
+            updateTranslations();
+            document.getElementById('langOptions').classList.remove('show');
+        }
+
+        // Update all elements with translations
+        function updateTranslations() {
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(function(element) {
+                const key = element.getAttribute('data-translate');
+                if (translations[currentLang] && translations[currentLang][key]) {
+                    if (key === 'copyright') {
+                        element.innerHTML = translations[currentLang][key];
+                    } else {
+                        element.textContent = translations[currentLang][key];
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
