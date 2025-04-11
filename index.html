@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CultureCoin - Gamify Culture. Earn Rewards.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #F9F6F1;
+            color: #1F1F1F;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 20px 0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 24px;
+            color: #684CFF;
+        }
+        
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #684CFF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: #1F1F1F;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #684CFF;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #1F1F1F;
+        }
+        
+        .hero p {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #684CFF;
+            font-weight: 500;
+        }
+        
+        .currency-graphic {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+        
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(104, 76, 255, 0.1);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(104, 76, 255, 0.2);
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #F9F6F1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        
+        .card-icon svg {
+            width: 30px;
+            height: 30px;
+            color: #684CFF;
+        }
+        
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #1F1F1F;
+        }
+        
+        .card p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #684CFF;
+            color: white;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(104, 76, 255, 0.3);
+        }
+        
+        .btn:hover {
+            background-color: #5B3FE6;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(104, 76, 255, 0.4);
+        }
+        
+        .btn-container {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        footer {
+            background-color: #1F1F1F;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        footer p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 20px;
+            }
+            
+            .currency-graphic {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .cards-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .currency-graphic {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .btn {
+                padding: 14px 28px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <div class="logo-icon">C</div>
+                    CultureCoin
+                </div>
+                <div class="nav-links">
+                    <a href="#">About</a>
+                    <a href="#">Features</a>
+                    <a href="#">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Welcome to CultureCoin</h1>
+            <p>Gamify Culture. Earn Rewards.</p>
+            <div class="currency-graphic">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="100" cy="100" r="80" fill="#684CFF" opacity="0.1"/>
+                    <circle cx="100" cy="100" r="60" fill="#684CFF" opacity="0.2"/>
+                    <circle cx="100" cy="100" r="40" fill="#684CFF" opacity="0.3"/>
+                    <text x="100" y="110" font-family="Arial" font-size="40" font-weight="bold" fill="#684CFF" text-anchor="middle">CC</text>
+                    <circle cx="70" cy="70" r="15" fill="#FFD700" stroke="#D4AF37" stroke-width="2">
+                        <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="10s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="130" cy="130" r="12" fill="#C0C0C0" stroke="#A8A8A8" stroke-width="2">
+                        <animateTransform attributeName="transform" type="rotate" from="360 100 100" to="0 100 100" dur="8s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="130" cy="70" r="10" fill="#CD7F32" stroke="#804A00" stroke-width="2">
+                        <animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="12s" repeatCount="indefinite"/>
+                    </circle>
+                </svg>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3>Explore Local Culture</h3>
+                    <p>Discover hidden gems in your city and earn coins for every new experience you unlock.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3>Redeem Real Rewards</h3>
+                    <p>Turn your digital coins into real-life rewards at local businesses and cultural venues.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <h3>Free for Merchants</h3>
+                    <p>Local businesses can list offers for free and attract culture-hungry customers.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <h3>Climb the Leaderboard</h3>
+                    <p>Compete with friends and earn achievements as you become a cultural connoisseur.</p>
+                </div>
+            </div>
+            
+            <div class="btn-container">
+                <a href="pages/login.html" class="btn">Login to Start</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CultureCoin. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
